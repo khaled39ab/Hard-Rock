@@ -33,3 +33,15 @@ const displaySongs = songs => {
     });
 };
 
+const getLyrics = (artist, title) =>{
+    const url = `https://api.lyrics.ovh/v1/${artist}/${title}`
+    
+    fetch (url)
+    .then (res => res.json())
+    .then (data => songLyrics(data.lyrics))
+}
+
+const songLyrics = lyrics =>{
+    const lyricsDiv = document.getElementById ("song-lyrics");
+    lyricsDiv.innerText = lyrics;
+}
