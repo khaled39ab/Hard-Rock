@@ -9,7 +9,9 @@ const searchSongs = () => {
 
 const displaySongs = songs => {
     const songsContainer = document.getElementById("songs-container");
-    songsContainer.innerText = '';
+    songsContainer.innerHTML= '';
+    const lyricsDiv = document.getElementById ("song-lyrics");
+    lyricsDiv.innerHTML = '';
     
     songs.forEach(song => {
         // console.log(song);
