@@ -1,10 +1,13 @@
-const searchSongs = () => {
+const searchSongs = async () => {
     const searchText = document.getElementById("search-field").value;
     const url = `https://api.lyrics.ovh/suggest/${searchText}`;
 
-    fetch(url)
-        .then(res => res.json())
-        .then(data => displaySongs(data.data))
+    // fetch(url)
+    //     .then(res => res.json())
+    //     .then(data => displaySongs(data.data))
+    const res = await fetch(url);
+    const data = await res.json();
+    displaySongs(data.data);
 }
 
 const displaySongs = songs => {
@@ -35,12 +38,15 @@ const displaySongs = songs => {
     });
 };
 
-const getLyrics = (artist, title) =>{
+const getLyrics = async (artist, title) =>{
     const url = `https://api.lyrics.ovh/v1/${artist}/${title}`
     
-    fetch (url)
-    .then (res => res.json())
-    .then (data => songLyrics(data.lyrics))
+    // fetch (url)
+    // .then (res => res.json())
+    // .then (data => songLyrics(data.lyrics));
+    const res = await fetch (url);
+    const data = await res.json();
+    songLyrics(data.lyrics);
 }
 
 const songLyrics = lyrics =>{
