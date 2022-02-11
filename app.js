@@ -3,19 +3,25 @@ const searchSongs = async () => {
     const url = `https://api.lyrics.ovh/suggest/${searchText}`;
 
     // fetch(url)
-    //     .then(res => res.json())
-    //     .then(data => displaySongs(data.data))
-    const res = await fetch(url);
-    const data = await res.json();
-    displaySongs(data.data);
+    // .then(res => res.json())
+    // .then(data => displaySongs(data.data))
+    // .catch(error => displayError("Oops! Something went wrong!! Please try again later!!!"))
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        displaySongs(data.data);
+    }
+    catch {
+        displayError("Oops! Something went wrong!! Please try again later!!!")
+    }
 }
 
 const displaySongs = songs => {
     const songsContainer = document.getElementById("songs-container");
-    songsContainer.innerHTML= '';
-    const lyricsDiv = document.getElementById ("song-lyrics");
+    songsContainer.innerHTML = '';
+    const lyricsDiv = document.getElementById("song-lyrics");
     lyricsDiv.innerHTML = '';
-    
+
     songs.forEach(song => {
         // console.log(song);
         const songDiv = document.createElement("div");
@@ -38,18 +44,33 @@ const displaySongs = songs => {
     });
 };
 
-const getLyrics = async (artist, title) =>{
+const getLyrics = async (artist, title) => {
     const url = `https://api.lyrics.ovh/v1/${artist}/${title}`
-    
+
     // fetch (url)
     // .then (res => res.json())
-    // .then (data => songLyrics(data.lyrics));
-    const res = await fetch (url);
-    const data = await res.json();
-    songLyrics(data.lyrics);
+    // .then (data => songLyrics(data.lyrics))
+    // .catch (error => displayError("Oops! Something went wrong!! Please try again later!!!"))
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        songLyrics(data.lyrics);
+    }
+    catch {
+        displayError("Oops! Something went wrong!! Please try again later!!!");
+    }
 }
 
-const songLyrics = lyrics =>{
-    const lyricsDiv = document.getElementById ("song-lyrics");
-    lyricsDiv.innerText = lyrics;
+const songLyrics = lyrics => {
+    const lyricsDiv = document.getElementById("song-lyrics");
+    if (lyrics === undefined) {
+        lyricsDiv.innerHTML = ` <h3 id = 'undefine'> Can not load data ! Please try again later!! </h3>`;
+    } else {
+        lyricsDiv.innerText = lyrics;
+    }
+}
+
+const displayError = error => {
+    const errorMessage = document.getElementById("error-message");
+    errorMessage.innerText = error;
 }
